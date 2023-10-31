@@ -1,18 +1,18 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   get_next_line_bonus.c                              :+:      :+:    :+:   */
+/*   get_next_line.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dcarrilh <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: dcarrilh <dcarrilh@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/29 11:00:40 by dcarrilh          #+#    #+#             */
-/*   Updated: 2022/11/29 11:00:43 by dcarrilh         ###   ########.fr       */
+/*   Updated: 2023/10/31 12:01:41 by dcarrilh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "get_next_line_bonus.h"
+#include "libft.h"
 
-static char	*ft_strchr(const char *str, int b)
+static char	*ft_strachr(const char *str, int b)
 {
 	int	a;
 
@@ -77,7 +77,7 @@ static char	*ini_file(int fd, char *file)
 		return (file);
 	buff = ft_calloc((BUFFER_SIZE + 1), sizeof(char));
 	readbytes = 1;
-	while (!ft_strchr(file, '\n') && readbytes > 0)
+	while (!ft_strachr(file, '\n') && readbytes > 0)
 	{
 		readbytes = read(fd, buff, BUFFER_SIZE);
 		if (readbytes == -1)

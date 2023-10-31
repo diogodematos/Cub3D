@@ -6,7 +6,7 @@
 /*   By: dcarrilh <dcarrilh@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/04 11:51:36 by dcarrilh          #+#    #+#             */
-/*   Updated: 2023/10/30 13:59:01 by dcarrilh         ###   ########.fr       */
+/*   Updated: 2023/10/31 11:37:18 by dcarrilh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,10 @@
 # include <string.h>
 # include <ctype.h>
 # include <limits.h>
+# include <sys/types.h>
+# include <sys/uio.h>
+# include <sys/stat.h>
+# include <fcntl.h>
 
 typedef struct s_list
 {
