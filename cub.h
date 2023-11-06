@@ -6,7 +6,7 @@
 /*   By: dcarrilh <dcarrilh@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/30 12:37:53 by dcarrilh          #+#    #+#             */
-/*   Updated: 2023/11/02 15:25:01 by dcarrilh         ###   ########.fr       */
+/*   Updated: 2023/11/06 17:52:17 by dcarrilh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,5 +42,6 @@ void	get_height(t_cub	*cub, char **argv);
 
 int	ft_strcmp(char *str, char *str2);
 void	myfree(char **str);
+
 
 #endif

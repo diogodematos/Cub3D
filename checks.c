@@ -6,7 +6,7 @@
 /*   By: dcarrilh <dcarrilh@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/31 11:24:20 by dcarrilh          #+#    #+#             */
-/*   Updated: 2023/11/02 15:28:51 by dcarrilh         ###   ########.fr       */
+/*   Updated: 2023/11/06 17:52:02 by dcarrilh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@ void get_map(t_cub *cub, char **argv)
 		return ((void)close(fd));
 	}
 	get_height(cub, argv);
-	cub->map = malloc(sizeof(char *) * cub->height + 1);
+	cub->map = ft_calloc(sizeof(char *), cub->height + 1);
 	if (!cub->map)
 		return;
 	while (1)
@@ -34,10 +34,9 @@ void get_map(t_cub *cub, char **argv)
 		if (!line)
 			break;
 		cub->map[i] = strdup(line);
-		free(line);
 		i++;
+		free(line);
 	}
-	cub->map[i] = NULL;
 	close(fd);
 }
 
@@ -114,25 +113,29 @@ int check_identifier3(t_check *check, char *str)
 int check_identifier(t_cub *cub, t_check *check)
 {
 	static int i;
-	int j;
 	char **split;
 
 	while (check->total < 6)
 	{
-		j = 0;
-		split = ft_split(cub->map[i], ' ');
-		if (!ft_strcmp(split[j], "NO") || !ft_strcmp(split[j], "SO") || !ft_strcmp(split[j], "EA")
-			|| !ft_strcmp(split[j], "WE") || !ft_strcmp(split[j], "F") || !ft_strcmp(split[j], "C"))
+		split = ft_split((const char *)cub->map[i], ' ');
+		if (split[2])
+		{
+			myfree(split);
+			return (printf("Error: Many Type Identifier\n"));
+		}
+		if (!ft_strcmp(split[0], "NO") || !ft_strcmp(split[0], "SO") || !ft_strcmp(split[0], "EA")
+			|| !ft_strcmp(split[0], "WE") || !ft_strcmp(split[0], "F") || !ft_strcmp(split[0], "C"))
 		{	
-			if (check_identifier2(check, split[j]) || check_identifier3(check, split[j]))
+			if (check_identifier2(check, split[0]) || check_identifier3(check, split[0]))
 				return (myfree(split), 1);
 		}
 		else if (cub->map[i][0] == '\n')
 			check->total--;
 		else 
+		{
+			myfree(split);
 			return (printf("Error: Wrong Type Identifier"));
-		if (split[3])
-			return (
+		}
 		myfree(split);
 		check->total++;
 		i++;
@@ -140,74 +143,8 @@ int check_identifier(t_cub *cub, t_check *check)
 	return (0);
 }
 
-// int check_identifier(t_cub *cub, t_check *check)
-// {
-// 	static int i;
-// 	int j;
-// 	char **split;
-
-// 	while (check->total < 6)
-// 	{
-// 		j = 0;
-// 		split = ft_split(cub->map[i], ' ');
-// 		if (!ft_strncmp(split[j], "NO", 2))
-// 		{
-// 			if (check->no == 0)
-// 				check->no = 1;
-// 			else
-// 				return (printf("Error: Double Type Identifier"));
-// 		}
-// 		else if (!ft_strncmp(split[j], "SO", 2))
-// 		{
-// 			if (check->so == 0)
-// 				check->so = 1;
-// 			else
-// 				return (printf("Error: Double Type Identifier"));
-// 		}
-// 		else if (!ft_strncmp(split[j], "EA", 2))
-// 		{
-// 			if (check->ea == 0)
-// 				check->ea = 1;
-// 			else
-// 				return (printf("Error: Double Type Identifier"));
-// 		}
-// 		else if (!ft_strncmp(split[j], "WE", 2))
-// 		{
-// 			if (check->we == 0)
-// 				check->we = 1;
-// 			else
-// 				return (printf("Error: Double Type Identifier"));
-// 		}
-// 		else if (!ft_strncmp(split[j], "F", 1))
-// 		{
-// 			if (check->f == 0)
-// 				check->f = 1;
-
-// 			else
-// 				return (printf("Error: Double Type Identifier"));
-// 		}
-// 		else if (!ft_strncmp(split[j], "C", 1))
-// 		{
-// 			if (check->c == 0)
-// 				check->c = 1;
-// 			else
-// 				return (printf("Error: Double Type Identifier"));
-// 		}
-// 		else if (cub->map[i][j] == '\n')
-// 			check->total--;
-// 		else
-// 			return (printf("Error: Wrong Type Identifier"));
-// 		while (split[j++])
-// 			free(split[j]);
-// 		free(split);
-// 		check->total++;
-// 		i++;
-// 	}
-// 	return (0);
-// }
-
 int checks(t_cub *cub, t_check *check, char **argv)
-{
+{	
 	get_map(cub, argv);
 	check_identifier(cub, check);
 	return (0);
