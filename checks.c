@@ -6,7 +6,7 @@
 /*   By: dcarrilh <dcarrilh@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/31 11:24:20 by dcarrilh          #+#    #+#             */
-/*   Updated: 2023/11/06 17:52:02 by dcarrilh         ###   ########.fr       */
+/*   Updated: 2023/11/09 13:04:01 by dcarrilh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ void get_map(t_cub *cub, char **argv)
 	fd = open(argv[1], O_RDONLY);
 	if (fd == -1)
 	{
-		printf("Error: File don't exist");
+		printf("Error: File don't exist\n");
 		return ((void)close(fd));
 	}
 	get_height(cub, argv);
@@ -59,86 +59,99 @@ void get_height(t_cub *cub, char **argv)
 
 int check_identifier2(t_check *check, char *str)
 {
-	if (!ft_strcmp(str, "NO"))
+	if (!ft_strncmp(str, "NO ", 3))
 	{
 		if (check->no == 0)
 			check->no = 1;
 		else
-			return (printf("Error: Double Type Identifier"));
+			return (printf("Error: Double Type Identifier\n"));
 	}
-	else if (!ft_strcmp(str, "SO"))
+	else if (!ft_strncmp(str, "SO ", 3))
 	{
 		if (check->so == 0)
 			check->so = 1;
 		else
-			return (printf("Error: Double Type Identifier"));
+			return (printf("Error: Double Type Identifier\n"));
 	}
-	else if (!ft_strcmp(str, "EA"))
+	else if (!ft_strncmp(str, "EA ", 3))
 	{
 		if (check->ea == 0)
 			check->ea = 1;
 		else
-			return (printf("Error: Double Type Identifier"));
+			return (printf("Error: Double Type Identifier\n"));
 	}
 	return (0);
 }
 
 int check_identifier3(t_check *check, char *str)
 {
-	if (!ft_strcmp(str, "WE"))
+	if (!ft_strncmp(str, "WE ", 3))
 	{
 		if (check->we == 0)
 			check->we = 1;
 		else
-			return (printf("Error: Double Type Identifier"));
+			return (printf("Error: Double Type Identifier\n"));
 	}
-	else if (!ft_strcmp(str, "F"))
+	else if (!ft_strncmp(str, "F ", 2))
 	{
 		if (check->f == 0)
 			check->f = 1;
 		else
-			return (printf("Error: Double Type Identifier"));
+			return (printf("Error: Double Type Identifier\n"));
 	}
-	else if (!ft_strcmp(str, "C"))
+	else if (!ft_strncmp(str, "C ", 2))
 	{
 		if (check->c == 0)
 			check->c = 1;
 		else
-			return (printf("Error: Double Type Identifier"));
+			return (printf("Error: Double Type Identifier\n"));
 	}
 	return (0);
 }
 	
+int	check_texture(char *str)
+{
+	int i;
+	
+	i = 0;
+	while (str[i] == 32)
+		i++;
+	if (str[i] == '\n')
+		return (printf("error no texture\n"), 1);
+	while (str[i] != 32 && str[i] != '\n')
+		i++;
+	while (str[i] == 32)
+		i++;
+	if (str[i] != '\n')
+		return (printf("many textures\n"), 1);
+	return (0);
+}
 
 int check_identifier(t_cub *cub, t_check *check)
 {
 	static int i;
-	char **split;
+	static int	j;
 
 	while (check->total < 6)
 	{
-		split = ft_split((const char *)cub->map[i], ' ');
-		if (split[2])
-		{
-			myfree(split);
-			return (printf("Error: Many Type Identifier\n"));
-		}
-		if (!ft_strcmp(split[0], "NO") || !ft_strcmp(split[0], "SO") || !ft_strcmp(split[0], "EA")
-			|| !ft_strcmp(split[0], "WE") || !ft_strcmp(split[0], "F") || !ft_strcmp(split[0], "C"))
+		while (cub->map[i][j] == 32)
+			j++;
+		if (!ft_strncmp(&cub->map[i][j], "NO ", 3) || !ft_strncmp(&cub->map[i][j], "SO ", 3) || !ft_strncmp(&cub->map[i][j], "EA ", 3)
+			|| !ft_strncmp(&cub->map[i][j], "WE ", 3) || !ft_strncmp(&cub->map[i][j], "F ", 2) || !ft_strncmp(&cub->map[i][j], "C ", 2))
 		{	
-			if (check_identifier2(check, split[0]) || check_identifier3(check, split[0]))
-				return (myfree(split), 1);
+			if (check_identifier2(check, &cub->map[i][j]) || check_identifier3(check, &cub->map[i][j]))
+				return (1);
+			else
+			{
+				if (check_texture(&cub->map[i][j + 3]) == 1)
+					return (1);
+			}
 		}
 		else if (cub->map[i][0] == '\n')
 			check->total--;
 		else 
-		{
-			myfree(split);
-			return (printf("Error: Wrong Type Identifier"));
-		}
-		myfree(split);
-		check->total++;
-		i++;
+			return (printf("Error: Wrong Type Identifier\n"), 1);
+		redux(&i, &j, check);
 	}
 	return (0);
 }
@@ -146,6 +159,7 @@ int check_identifier(t_cub *cub, t_check *check)
 int checks(t_cub *cub, t_check *check, char **argv)
 {	
 	get_map(cub, argv);
-	check_identifier(cub, check);
+	if (check_identifier(cub, check))
+		return (1);
 	return (0);
 }

@@ -6,7 +6,7 @@
 /*   By: dcarrilh <dcarrilh@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/30 11:31:22 by dcarrilh          #+#    #+#             */
-/*   Updated: 2023/11/06 12:47:32 by dcarrilh         ###   ########.fr       */
+/*   Updated: 2023/11/09 12:17:29 by dcarrilh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,9 +47,13 @@ int	main(int argc, char **argv)
 	if (ft_check_cub(argv) == 1)
 		return(printf("%s\n","Error: Invalid file extension"));
 	init_struct(&cub, &check);
-	checks(&cub, &check, argv);
-	printf("height: %d\n", cub.height);
-	printf("%s", cub.map[2]);
+	if (checks(&cub, &check, argv) == 1)
+		printf("bad\n");
+	else
+	{
+		printf("height: %d\n", cub.height);
+		printf("%s", cub.map[2]);
+	}
 	myfree(cub.map);
 	return (0);
 }
