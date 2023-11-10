@@ -6,7 +6,7 @@
 /*   By: dcarrilh <dcarrilh@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/30 12:37:53 by dcarrilh          #+#    #+#             */
-/*   Updated: 2023/11/09 13:04:47 by dcarrilh         ###   ########.fr       */
+/*   Updated: 2023/11/10 11:35:46 by dcarrilh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,11 +24,14 @@ typedef struct	check
 	int	f;
 	int	c;
 	int	total;
+	int	wall;
+	int	f_line;
 }	t_check;
 
 typedef struct	cub
 {
 		char **map;
+		char **t_map;
 		int	height;
 }	t_cub;
 
@@ -44,7 +47,7 @@ int	ft_strcmp(char *str, char *str2);
 void	myfree(char **str);
 
 int	check_texture(char *str);
-void redux(int *i, int *j, t_check *check);
+int redux(int *i, int *j, t_check *check);
 
 
 

@@ -6,7 +6,7 @@
 /*   By: dcarrilh <dcarrilh@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/02 12:19:37 by dcarrilh          #+#    #+#             */
-/*   Updated: 2023/11/09 13:04:29 by dcarrilh         ###   ########.fr       */
+/*   Updated: 2023/11/10 11:41:16 by dcarrilh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,10 +39,4 @@ void	myfree(char **str)
 	free(str);
 }
 
-void redux(int *i, int *j, t_check *check)
-{
-	i++;
-	j = 0;
-	check->total++;
-}
 

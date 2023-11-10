@@ -6,7 +6,7 @@
 /*   By: dcarrilh <dcarrilh@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/31 11:24:20 by dcarrilh          #+#    #+#             */
-/*   Updated: 2023/11/09 13:04:01 by dcarrilh         ###   ########.fr       */
+/*   Updated: 2023/11/10 11:55:21 by dcarrilh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -139,27 +139,74 @@ int check_identifier(t_cub *cub, t_check *check)
 		if (!ft_strncmp(&cub->map[i][j], "NO ", 3) || !ft_strncmp(&cub->map[i][j], "SO ", 3) || !ft_strncmp(&cub->map[i][j], "EA ", 3)
 			|| !ft_strncmp(&cub->map[i][j], "WE ", 3) || !ft_strncmp(&cub->map[i][j], "F ", 2) || !ft_strncmp(&cub->map[i][j], "C ", 2))
 		{	
-			if (check_identifier2(check, &cub->map[i][j]) || check_identifier3(check, &cub->map[i][j]))
+			if (check_identifier2(check, &cub->map[i][j]) || check_identifier3(check, &cub->map[i][j]) || (check_texture(&cub->map[i][j + 3]) == 1))
 				return (1);
-			else
-			{
-				if (check_texture(&cub->map[i][j + 3]) == 1)
-					return (1);
-			}
 		}
 		else if (cub->map[i][0] == '\n')
 			check->total--;
 		else 
 			return (printf("Error: Wrong Type Identifier\n"), 1);
-		redux(&i, &j, check);
+		i++;
+		j = 0;
+		check->total++;
 	}
-	return (0);
+	return (i - 1);
 }
+// int	check_map(t_cub *cub, t_check *check, int	i)
+// {
+// 	int	j;
+	
+// 	while (cub->map[i])
+// 	{
+// 		j = 0;
+// 		if (cub->map[i][0] == '\n')
+// 		{
+// 			i++;
+// 			continue ;
+// 		}
+// 		while  (cub->map[i][j])
+// 		{
+// 			while (cub->map[i][j] == 32)
+// 				j++;
+// 			if (cub->map[i][j] != 1)
+// 				return(printf("error: don't start walls"), 1);
+// 			if (cub->map[i][j] == 1 && !check->f_line)
+// 			{
+// 				while (cub->map[i][j] == 1 || cub->map[i][j] == 32)
+// 					j++;
+// 				if (cub->map[i][j] != '\n')
+// 					return(printf("error: first line with holes"), 1);
+// 				else
+// 					check->f_line = 1;
+// 			}
+// 			if (cub->map[i][j] == 1 && check->f_line)
+// 			{
+// 				while 
+// 			}
+			
+// 		}
+		
+
+// 	}
+// }
 
 int checks(t_cub *cub, t_check *check, char **argv)
 {	
+	static int	m;
+	static int	i;
+	
 	get_map(cub, argv);
-	if (check_identifier(cub, check))
+	if (check_identifier(cub, check) == 1)
 		return (1);
+	m = check_identifier(cub, check) + 1;
+	printf("%d\n", m);
+	cub->t_map = ft_calloc((cub->height + m + 1), sizeof(char *));
+	while (cub->map[m])
+	{
+		cub->t_map[i++] = strdup(cub->map[m++]);
+	}
+	printf("%s", cub->map[10]);
+	printf("%s", cub->t_map[3]);
+	// check_map(cub, check, check_identifier(cub, check));
 	return (0);
 }
