@@ -6,7 +6,7 @@
 /*   By: dcarrilh <dcarrilh@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/31 11:24:20 by dcarrilh          #+#    #+#             */
-/*   Updated: 2023/11/10 11:55:21 by dcarrilh         ###   ########.fr       */
+/*   Updated: 2023/11/10 18:27:56 by dcarrilh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -114,7 +114,7 @@ int	check_texture(char *str)
 	int i;
 	
 	i = 0;
-	while (str[i] == 32)
+	while (str[i] == 32 || str[i] == 9)
 		i++;
 	if (str[i] == '\n')
 		return (printf("error no texture\n"), 1);
@@ -134,7 +134,7 @@ int check_identifier(t_cub *cub, t_check *check)
 
 	while (check->total < 6)
 	{
-		while (cub->map[i][j] == 32)
+		while (cub->map[i][j] == 32 || cub->map[i][j] == 9)
 			j++;
 		if (!ft_strncmp(&cub->map[i][j], "NO ", 3) || !ft_strncmp(&cub->map[i][j], "SO ", 3) || !ft_strncmp(&cub->map[i][j], "EA ", 3)
 			|| !ft_strncmp(&cub->map[i][j], "WE ", 3) || !ft_strncmp(&cub->map[i][j], "F ", 2) || !ft_strncmp(&cub->map[i][j], "C ", 2))
@@ -152,44 +152,102 @@ int check_identifier(t_cub *cub, t_check *check)
 	}
 	return (i - 1);
 }
-// int	check_map(t_cub *cub, t_check *check, int	i)
-// {
-// 	int	j;
+
+int	check_map(t_cub *cub, t_check *check)
+{
+	int	j;
+	static int	i;
 	
-// 	while (cub->map[i])
-// 	{
-// 		j = 0;
-// 		if (cub->map[i][0] == '\n')
-// 		{
-// 			i++;
-// 			continue ;
-// 		}
-// 		while  (cub->map[i][j])
-// 		{
-// 			while (cub->map[i][j] == 32)
-// 				j++;
-// 			if (cub->map[i][j] != 1)
-// 				return(printf("error: don't start walls"), 1);
-// 			if (cub->map[i][j] == 1 && !check->f_line)
-// 			{
-// 				while (cub->map[i][j] == 1 || cub->map[i][j] == 32)
-// 					j++;
-// 				if (cub->map[i][j] != '\n')
-// 					return(printf("error: first line with holes"), 1);
-// 				else
-// 					check->f_line = 1;
-// 			}
-// 			if (cub->map[i][j] == 1 && check->f_line)
-// 			{
-// 				while 
-// 			}
-			
-// 		}
-		
+	while (cub->t_map[i])
+	{
+		j = 0;
+		if (cub->t_map[i][j] == '\n')
+		{
+			i++;
+			continue ;
+		}
+		while (cub->t_map[i][j] == ' ' || cub->t_map[i][j] == '	')
+			j++;
+		if (cub->t_map[i][j] != 49)
+			return(printf("error: don't start walls\n"), 1);
+		while (cub->t_map[i][j])
+		{
+			if (cub->t_map[i][j] == 49 && cub->t_map[i][j + 1] == 48 && check->wall == 0)
+				check->wall = 1;
+			else if (cub->t_map[i][j] == 49 && (cub->t_map[i][j + 1] == 32 || cub->t_map[i][j + 1] == '\n') && check->wall == 1)
+				check->wall = 0;
+			else if ((cub->t_map[i][j] == 32 || cub->t_map[i][j] == 9) && cub->t_map[i][j + 1] == 48)
+			{
+				printf("%s\n%s\n%s\n", cub->t_map[i - 1], cub->t_map[i], cub->t_map[i + 1]);
+				return (printf("error: map is open\n"), 1);
+			}
+			else if (cub->t_map[i][j] == 48 && (cub->t_map[i + 1][j] == 32 || cub->t_map[i + 1][j] == 9 || cub->t_map[i - 1][j] == 32 || cub->t_map[i - 1][j] == 9))
+			{
+				printf("%s%s%s", cub->t_map[i - 1], cub->t_map[i], cub->t_map[i + 1]);
+				return (printf("error: map is open\n"), 1);
+			}
+			j++;
+		}
+		if (check->wall == 1)
+		{
+				printf("%s\n%s\n%s\n", cub->t_map[i - 1], cub->t_map[i], cub->t_map[i + 1]);
+				return (printf("error: map is open\n"), 1);
+		}
+		i++;
+	}
+	return (0);
+}
 
-// 	}
-// }
+int	check_player(t_cub *cub, t_check *check)
+{
+	static int	i;
+	int	j;
 
+	while (cub->t_map[i])
+	{
+		j = -1;
+		while (cub->t_map[i][++j])
+		{
+			if (cub->t_map[i][j] == 'N' || cub->t_map[i][j] == 'S' || cub->t_map[i][j] == 'E' || cub->t_map[i][j] == 'W')
+			{
+				if (!check->player)
+					check->player = 1;
+				else
+					return (printf("error: many players\n"), 1);
+			}
+		}
+		i++;
+	}
+	return (0);
+}
+
+void change_tab(t_cub *cub)
+{
+	static int	i;
+	int	j;
+	int	k;
+
+	while (cub->t_map[i])
+	{
+		j = 0;
+		while (cub->t_map[i][j])
+		{		
+			if (cub->t_map[i][j] == 9)
+			{
+				cub->t_map[i][j] = 32;
+				k = ft_strlen(cub->t_map[i] + 1);
+				while (k > j)
+				{
+					cub->t_map[i][k] = cub->t_map[i][k - 1];
+					k--;
+				}
+				cub->t_map[i][++j] = 32;
+			}	
+			j++;
+		}
+		i++;
+	}
+}
 int checks(t_cub *cub, t_check *check, char **argv)
 {	
 	static int	m;
@@ -205,8 +263,8 @@ int checks(t_cub *cub, t_check *check, char **argv)
 	{
 		cub->t_map[i++] = strdup(cub->map[m++]);
 	}
-	printf("%s", cub->map[10]);
-	printf("%s", cub->t_map[3]);
-	// check_map(cub, check, check_identifier(cub, check));
+	change_tab(cub);
+	if (check_player(cub, check) || check_map(cub, check))
+		return (1);
 	return (0);
 }
