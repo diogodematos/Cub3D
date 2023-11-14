@@ -1,6 +1,6 @@
 NAME = cub
 
-SRC = cub.c checks.c utils.c\
+SRC = cub.c checks.c utils.c check_type.c\
 
 CC = cc -g
 RM = rm -rf

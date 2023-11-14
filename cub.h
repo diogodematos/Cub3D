@@ -6,7 +6,7 @@
 /*   By: dcarrilh <dcarrilh@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/30 12:37:53 by dcarrilh          #+#    #+#             */
-/*   Updated: 2023/11/10 15:49:54 by dcarrilh         ###   ########.fr       */
+/*   Updated: 2023/11/14 15:14:34 by dcarrilh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,6 +27,7 @@ typedef struct	check
 	int	wall;
 	int	f_line;
 	int	player;
+	int	comma;
 }	t_check;
 
 typedef struct	cub
@@ -46,8 +47,11 @@ void	get_height(t_cub	*cub, char **argv);
 
 int	ft_strcmp(char *str, char *str2);
 void	myfree(char **str);
+int	redcol(char *str, int	n);
 
-int	check_texture(char *str);
+int check_identifier(t_cub *cub, t_check *check);
+
+int	check_texture(char *type, char *str);
 int redux(int *i, int *j, t_check *check);
 
 int	check_player(t_cub *cub, t_check *check);
