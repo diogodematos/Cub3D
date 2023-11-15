@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   checks.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dcarrilh <dcarrilh@student.42.fr>          +#+  +:+       +#+        */
+/*   By: dcarrilh <dcarrilh@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/31 11:24:20 by dcarrilh          #+#    #+#             */
-/*   Updated: 2023/11/15 15:59:19 by dcarrilh         ###   ########.fr       */
+/*   Updated: 2023/11/15 21:00:06 by dcarrilh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,9 +86,8 @@ int	check_map(t_cub *cub, t_check *check, int j)
 	return (0);
 }
 
-int	check_player(t_cub *cub, t_check *check)
+int	check_player(t_cub *cub, t_check *check, int i)
 {
-	static int	i;
 	int			j;
 
 	while (cub->t_map[i])
@@ -111,6 +110,8 @@ int	check_player(t_cub *cub, t_check *check)
 		}
 		i++;
 	}
+	if (!check->player)
+		return (printf("error: no player\n"), 1);
 	return (0);
 }
 
@@ -129,7 +130,7 @@ int	checks(t_cub *cub, t_check *check, char **argv)
 	{
 		cub->t_map[i++] = strdup(cub->map[m++]);
 	}
-	if (check_player(cub, check) || check_map(cub, check, 0))
+	if (check_player(cub, check, 0) || check_map(cub, check, 0))
 		return (1);
 	return (0);
 }

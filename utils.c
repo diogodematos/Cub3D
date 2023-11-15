@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dcarrilh <dcarrilh@student.42.fr>          +#+  +:+       +#+        */
+/*   By: dcarrilh <dcarrilh@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/02 12:19:37 by dcarrilh          #+#    #+#             */
-/*   Updated: 2023/11/15 17:22:35 by dcarrilh         ###   ########.fr       */
+/*   Updated: 2023/11/15 21:04:04 by dcarrilh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,6 +87,12 @@ int	redcheck_map(t_check *check, t_cub *cub, int i, int j)
 	else if (cub->t_map[i][j] == 48 && (cub->t_map[i + 1][j] == 32
 		|| cub->t_map[i - 1][j] == 32))
 		return (printf("error: map is open\n"), 1);
+	else if (ft_strchr("WESN", cub->t_map[i][j]) != 0)
+	{
+		if ((cub->t_map[i - 1][j] != 48 && cub->t_map[i - 1][j] != 49)
+			|| (cub->t_map[i + 1][j] == 48 && cub->t_map[i + 1][j] == 49))
+			return(printf("Error: Player Can Go To The Void!\n"), 1);
+	}
 	return (0);
 }
 
