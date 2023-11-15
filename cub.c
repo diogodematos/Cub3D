@@ -6,7 +6,7 @@
 /*   By: dcarrilh <dcarrilh@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/30 11:31:22 by dcarrilh          #+#    #+#             */
-/*   Updated: 2023/11/15 11:41:59 by dcarrilh         ###   ########.fr       */
+/*   Updated: 2023/11/15 16:07:37 by dcarrilh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,8 @@ int	ft_check_cub(char **argv)
 
 	i = ft_strlen(argv[1]);
 	j = i - 5;
+	if (!ft_strcmp(argv[1], ".cub"))
+		return (printf("Error: only .cub\n"), 1);
 	str = ".cub";
 	while (++j <= i)
 	{

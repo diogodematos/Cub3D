@@ -6,7 +6,7 @@
 /*   By: dcarrilh <dcarrilh@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/30 12:37:53 by dcarrilh          #+#    #+#             */
-/*   Updated: 2023/11/15 11:38:33 by dcarrilh         ###   ########.fr       */
+/*   Updated: 2023/11/15 15:59:47 by dcarrilh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,6 +56,8 @@ int check_identifier(t_cub *cub, t_check *check, int i, int j);
 
 int	check_texture(char *type, char *str);
 int redux(int *i, int *j, t_check *check);
+int	redcheck_map(t_check *check, t_cub *cub, int i, int j);
+
 
 int	check_player(t_cub *cub, t_check *check);
 
