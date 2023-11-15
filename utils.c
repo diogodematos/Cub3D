@@ -6,7 +6,7 @@
 /*   By: dcarrilh <dcarrilh@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/02 12:19:37 by dcarrilh          #+#    #+#             */
-/*   Updated: 2023/11/15 16:42:19 by dcarrilh         ###   ########.fr       */
+/*   Updated: 2023/11/15 17:22:35 by dcarrilh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,6 +29,23 @@ int	ft_strcmp(char *str, char *str2)
 	return (0);
 }
 
+int	redcol2(char *str)
+{
+	int	j;
+
+	j = 0;
+	if ((str[j] == 50) && ((str[j + 1] == 53)
+			&& (str[j + 2] < 48 || str[j + 2] > 53))) 
+		return (printf("Error1: Wrong Colors\n"), 1);
+	if ((str[j] == 50) && ((str[j + 1] < 48 || str[j + 1] > 53)
+			|| (str[j + 2] < 48 || str[j + 2] > 57))) 
+		return (printf("Error2: Wrong Colors\n"), 1);
+	if ((str[j] < 48 || str[j] > 50) || (str[j + 1] < 48
+			|| str[j + 1] > 57) || (str[j + 2] < 48 || str[j + 2] > 57))
+		return (printf("Error3: Wrong Colors\n"), 1);
+	return (0);
+}
+
 int	redcol(char *str, int n)
 {
 	int	j;
@@ -36,15 +53,8 @@ int	redcol(char *str, int n)
 	j = 0;
 	if (n == 3)
 	{
-		if ((str[j] == 50) && ((str[j + 1] == 53)
-				&& (str[j + 2] < 48 || str[j + 2] > 53))) 
-			return (printf("Error1: Wrong Colors\n"), 1);
-		if ((str[j] == 50) && ((str[j + 1] < 48 || str[j + 1] > 53)
-				|| (str[j + 2] < 48 || str[j + 2] > 57))) 
-			return (printf("Error2: Wrong Colors\n"), 1);
-		if ((str[j] < 48 || str[j] > 50) || (str[j + 1] < 48
-				|| str[j + 1] > 57) || (str[j + 2] < 48 || str[j + 2] > 57))
-			return (printf("Error3: Wrong Colors\n"), 1);
+		if (redcol2(str) == 1)
+			return (1);
 	}
 	else if (n == 2)
 	{
