@@ -6,7 +6,7 @@
 /*   By: dcarrilh <dcarrilh@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/30 12:37:53 by dcarrilh          #+#    #+#             */
-/*   Updated: 2023/11/14 15:14:34 by dcarrilh         ###   ########.fr       */
+/*   Updated: 2023/11/15 11:38:33 by dcarrilh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,6 +35,9 @@ typedef struct	cub
 		char **map;
 		char **t_map;
 		int	height;
+		int	t_height;
+		int	py;
+		int	px;
 }	t_cub;
 
 
@@ -49,7 +52,7 @@ int	ft_strcmp(char *str, char *str2);
 void	myfree(char **str);
 int	redcol(char *str, int	n);
 
-int check_identifier(t_cub *cub, t_check *check);
+int check_identifier(t_cub *cub, t_check *check, int i, int j);
 
 int	check_texture(char *type, char *str);
 int redux(int *i, int *j, t_check *check);

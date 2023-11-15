@@ -6,7 +6,7 @@
 /*   By: dcarrilh <dcarrilh@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/30 11:31:22 by dcarrilh          #+#    #+#             */
-/*   Updated: 2023/11/14 12:21:14 by dcarrilh         ###   ########.fr       */
+/*   Updated: 2023/11/15 11:41:59 by dcarrilh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,14 +14,14 @@
 
 int	ft_check_cub(char **argv)
 {
-	int i;
-	int	j;
+	int		i;
+	int		j;
 	char	*str;
 
 	i = ft_strlen(argv[1]);
 	j = i - 5;
 	str = ".cub";
-	while (++j <= i )
+	while (++j <= i)
 	{
 		if (argv[1][j] != *str++)
 			return (1);
@@ -39,14 +39,14 @@ int	main(int argc, char **argv)
 {
 	t_cub	cub;
 	t_check	check;
-	
+
 	if (argc != 2)
-		return(printf("%s\n","Error: Invalid numbers of arguments"));
+		return (printf("Error: Invalid numbers of arguments\n"));
 	if (ft_check_cub(argv) == 1)
-		return(printf("%s\n","Error: Invalid file extension"));
+		return (printf("Error: Invalid file extension\n"));
 	init_struct(&cub, &check);
 	if (checks(&cub, &check, argv) == 1)
-		return(myfree(cub.map), printf("bad\n"), 0);
+		return (myfree(cub.map), printf("bad\n"), 0);
 	else
 	{
 		printf("height: %d\n", cub.height);
