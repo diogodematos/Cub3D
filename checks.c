@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   checks.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dcarrilh <dcarrilh@student.42porto.com>    +#+  +:+       +#+        */
+/*   By: dcarrilh <dcarrilh@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/31 11:24:20 by dcarrilh          #+#    #+#             */
-/*   Updated: 2023/11/15 21:00:06 by dcarrilh         ###   ########.fr       */
+/*   Updated: 2023/11/16 15:23:05 by dcarrilh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,10 +33,11 @@ void	get_map(t_cub *cub, char **argv)
 		line = get_next_line(fd);
 		if (!line)
 			break ;
-		cub->map[i] = strdup(line);
-		i++;
+		cub->map[i++] = strdup(line);
 		free(line);
 	}
+	if (i == 0)
+		cub->mapa = 1;
 	close(fd);
 }
 
@@ -63,6 +64,7 @@ int	check_map(t_cub *cub, t_check *check, int j)
 
 	while (cub->t_map[i])
 	{
+		printf("%c\n", cub->player);
 		j = 0;
 		while (cub->t_map[i][j] == 32 && cub->t_map[i][j] != '\n')
 			j++;
@@ -90,7 +92,7 @@ int	check_player(t_cub *cub, t_check *check, int i)
 {
 	int			j;
 
-	while (cub->t_map[i])
+	while (cub->t_map[++i])
 	{
 		j = -1;
 		while (cub->t_map[i][++j])
@@ -103,12 +105,13 @@ int	check_player(t_cub *cub, t_check *check, int i)
 					cub->py = i;
 					cub->px = j;
 					check->player = 1;
+					cub->player = cub->t_map[i][j];
+					printf("%c\n", cub->player);
 				}
 				else
 					return (printf("error: many players\n"), 1);
 			}
 		}
-		i++;
 	}
 	if (!check->player)
 		return (printf("error: no player\n"), 1);
@@ -121,8 +124,10 @@ int	checks(t_cub *cub, t_check *check, char **argv)
 	static int	i;
 
 	get_map(cub, argv);
+	if (cub->mapa == 1)
+		return (myfree(cub->map), printf("Error: Empty .cub\n"), 1);
 	if (check_identifier(cub, check, 0, 0) == 1)
-		return (1);
+		return (myfree(cub->map), printf("bad\n"), 1);
 	m = cub->height - cub->t_height;
 	printf("m: %d\n", m);
 	cub->t_map = ft_calloc((cub->t_height + 1), sizeof(char *));
@@ -130,7 +135,7 @@ int	checks(t_cub *cub, t_check *check, char **argv)
 	{
 		cub->t_map[i++] = strdup(cub->map[m++]);
 	}
-	if (check_player(cub, check, 0) || check_map(cub, check, 0))
-		return (1);
+	if (check_player(cub, check, -1) || check_map(cub, check, 0))
+		return (myfree(cub->t_map), myfree(cub->map), 1);
 	return (0);
 }

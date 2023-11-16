@@ -1,4 +1,4 @@
-NAME = cub
+NAME = cub3d
 
 SRC = cub.c checks.c utils.c check_type.c\
 

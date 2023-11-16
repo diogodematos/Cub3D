@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cub.h                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dcarrilh <dcarrilh@student.42porto.com>    +#+  +:+       +#+        */
+/*   By: dcarrilh <dcarrilh@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/30 12:37:53 by dcarrilh          #+#    #+#             */
-/*   Updated: 2023/11/15 21:00:30 by dcarrilh         ###   ########.fr       */
+/*   Updated: 2023/11/16 14:43:38 by dcarrilh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,6 +32,8 @@ typedef struct	check
 
 typedef struct	cub
 {
+		int	mapa;
+		char	player;
 		char **map;
 		char **t_map;
 		int	height;
