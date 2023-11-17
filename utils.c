@@ -6,7 +6,7 @@
 /*   By: dcarrilh <dcarrilh@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/02 12:19:37 by dcarrilh          #+#    #+#             */
-/*   Updated: 2023/11/16 15:28:41 by dcarrilh         ###   ########.fr       */
+/*   Updated: 2023/11/16 16:02:46 by dcarrilh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,21 +76,26 @@ int	redcheck_map(t_check *check, t_cub *cub, int i, int j)
 {
 	if (!ft_strchr(" 10WESN\n", cub->t_map[i][j]))
 		return (printf("i: %i\nError: Inavid Character\n", i));
-	if (cub->t_map[i][j] == 49 && cub->t_map[i][j + 1] == 48 && check->wall == 0)
+	if (cub->t_map[i][j] == 49 && cub->t_map[i][j + 1] == 48
+		&& check->wall == 0)
 		check->wall = 1;
 	else if (cub->t_map[i][j] == 49 && (cub->t_map[i][j + 1] == 32
 		|| cub->t_map[i][j + 1] == '\n') && check->wall == 1)
 		check->wall = 0;
 	else if ((cub->t_map[i][j] == 32) && cub->t_map[i][j + 1] == 48)
 		return (printf("error: map is open\n"), 1);
-	else if (((ft_strchr("WESN", cub->t_map[i][j]) != 0) || cub->t_map[i][j] == 48) && i == 0)
+	else if (((ft_strchr("WESN", cub->t_map[i][j]) != 0) 
+		|| cub->t_map[i][j] == 48) && i == 0)
 		return (printf("error: map is open\n"), 1);
-	else if ((ft_strchr("WESN", cub->t_map[i][j]) != 0) || cub->t_map[i][j] == 48)
+	else if ((ft_strchr("WESN", cub->t_map[i][j]) != 0) 
+		|| cub->t_map[i][j] == 48)
 	{
 		if (((int)ft_strlen(cub->t_map[i - 1]) <= j) || i == cub->t_height - 1
-			|| (cub->t_map[i - 1][j] != 48 && cub->t_map[i - 1][j] != 49 && cub->t_map[i + 1][j] != cub->player)
-			|| (cub->t_map[i + 1][j] != 48 && cub->t_map[i + 1][j] != 49 && cub->t_map[i + 1][j] != cub->player))
-			return(printf("Error: Player Can Go To The Void!\n"), 1);
+			|| (cub->t_map[i - 1][j] != 48 && cub->t_map[i - 1][j] != 49 
+				&& cub->t_map[i - 1][j] != cub->player)
+			|| (cub->t_map[i + 1][j] != 48 && cub->t_map[i + 1][j] != 49 
+				&& cub->t_map[i + 1][j] != cub->player))
+			return (printf("i: %i %i %c\nError: Player Can Go To The Void!\n", i, j, cub->t_map[i][j]), 1);
 	}
 	return (0);
 }

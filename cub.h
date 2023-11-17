@@ -6,7 +6,7 @@
 /*   By: dcarrilh <dcarrilh@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/30 12:37:53 by dcarrilh          #+#    #+#             */
-/*   Updated: 2023/11/16 14:43:38 by dcarrilh         ###   ########.fr       */
+/*   Updated: 2023/11/17 11:02:59 by dcarrilh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,6 +33,12 @@ typedef struct	check
 typedef struct	cub
 {
 		int	mapa;
+		char	*ntext;
+		char	*stext;
+		char	*etext;
+		char	*wtext;
+		unsigned long	fcolor;
+		unsigned long	ccolor;
 		char	player;
 		char **map;
 		char **t_map;

@@ -6,7 +6,7 @@
 /*   By: dcarrilh <dcarrilh@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/14 10:44:29 by dcarrilh          #+#    #+#             */
-/*   Updated: 2023/11/16 15:22:32 by dcarrilh         ###   ########.fr       */
+/*   Updated: 2023/11/17 12:52:00 by dcarrilh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,7 @@ int	color(t_check *check, char *s, int i, int j)
 	return (check->comma = 0, 0);
 }
 
-int	tex(char *str, int i)
+int	tex(char *str, int i, char **s)
 {
 	int		j;
 	char	*text;
@@ -51,7 +51,7 @@ int	tex(char *str, int i)
 		i++;
 	if (str[i] == '\n')
 		return (printf("error no texture\n"), 1);
-	text = calloc(sizeof(char), 256);
+	text = ft_calloc(sizeof(char), 256);
 	while (str[i] != 32 && str[i] != '\n' && str[i] != 9)
 	{
 		text[j++] = str[i];
@@ -65,35 +65,76 @@ int	tex(char *str, int i)
 		i++;
 	if (str[i] != '\n')
 		return (free(text), printf("many textures\n"), 1);
+	*s = ft_strdup(text);
 	free(text);
 	return (0);
 }
 
-int	type2(t_check *check, char *str)
+void	get_hex_color(char *str, unsigned long *s, int i)
+{
+	int	r;
+	int	g;
+	int	b;
+
+	r = 0;
+	while (str[i] == 32 || str[i] == 9)
+		i++;
+	r = ft_atoi(&str[i]);
+	while (str[i] != 32 && str[i] != '\n' && str[i] != 9 && str[i] != ',')
+		i++;
+	g = ft_atoi(&str[++i]);
+	while (str[i] != 32 && str[i] != '\n' && str[i] != 9 && str[i] != ',')
+		i++;
+	b = ft_atoi(&str[++i]);
+	printf("r: %i\ng: %i\nb: %i\n", r, g, b);
+	*s = ((r * 65536) + (g * 256) + b);
+}
+
+int	type2(t_check *check, char *str, t_cub *cub)
 {
 	if (str[1] != 32 && str[1] != 9)
 		return (printf("Error2: Wrong Type Identifier\n"));
 	else if (!ft_strncmp(str, "F", 1) && (check->f == 0))
+	{
 		check->f = 1;
+		get_hex_color(str, &cub->fcolor, 1);
+		printf("%lu\n", cub->fcolor);
+	}
 	else if (!ft_strncmp(str, "C", 1) && (check->c == 0))
+	{
 		check->c = 1;
+		get_hex_color(str, &cub->ccolor, 1);
+		printf("%lu\n", cub->ccolor);
+	}
 	else
 		return (printf("Error1: Double Type Identifier\n"));
 	return (0);
 }
 
-int	type1(t_check *check, char *str)
+int	type1(t_check *check, t_cub *cub, int i, int j)
 {
-	if (str[2] != 32 && str[2] != 9)
+	if (cub->map[i][j + 2] != 32 && cub->map[i][j + 2] != 9)
 		return (printf("Error1: Wrong Type Identifier\n"));
-	if (!ft_strncmp(str, "NO", 2) && (check->no == 0))
+	if (!ft_strncmp(cub->map[i], "NO", 2) && (check->no == 0))
+	{
 		check->no = 1;
-	else if (!ft_strncmp(str, "SO", 2) && (check->so == 0))
+		tex(&cub->map[i][j], (j + 2), &cub->ntext);
+	}
+	else if (!ft_strncmp(cub->map[i], "SO", 2) && (check->so == 0))
+	{
 		check->so = 1;
-	else if (!ft_strncmp(str, "WE", 2) && (check->we == 0))
+		tex(&cub->map[i][j], (j + 2), &cub->stext);
+	}
+	else if (!ft_strncmp(cub->map[i], "WE", 2) && (check->we == 0))
+	{
 		check->we = 1;
-	else if (!ft_strncmp(str, "EA", 2) && (check->ea == 0))
+		tex(&cub->map[i][j], (j + 2), &cub->wtext);
+	}
+	else if (!ft_strncmp(cub->map[i], "EA", 2) && (check->ea == 0))
+	{
 		check->ea = 1;
+		tex(&cub->map[i][j], (j + 2), &cub->etext);
+	}
 	else
 		return (printf("Error2: Double Type Identifier\n"));
 	return (0);
@@ -109,12 +150,12 @@ int	check_identifier(t_cub *cub, t_check *check, int i, int j)
 		if (cub->map[i][j] == 'N' || cub->map[i][j] == 'S'
 			|| cub->map[i][j] == 'E' || cub->map[i][j] == 'W')
 		{
-			if (type1(check, &cub->map[i][j]) || tex(&cub->map[i][j], (j + 2)))
+			if (type1(check, cub, i, j))
 				return (1);
 		}
 		else if (cub->map[i][j] == 'C' || cub->map[i][j] == 'F')
 		{
-			if (type2(check, &cub->map[i][j])
+			if (type2(check, &cub->map[i][j], cub)
 				|| color(check, &cub->map[i][j], (j + 1), i))
 				return (1);
 		}

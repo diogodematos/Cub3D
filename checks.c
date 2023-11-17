@@ -6,7 +6,7 @@
 /*   By: dcarrilh <dcarrilh@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/31 11:24:20 by dcarrilh          #+#    #+#             */
-/*   Updated: 2023/11/16 15:23:05 by dcarrilh         ###   ########.fr       */
+/*   Updated: 2023/11/16 15:54:19 by dcarrilh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,7 +64,6 @@ int	check_map(t_cub *cub, t_check *check, int j)
 
 	while (cub->t_map[i])
 	{
-		printf("%c\n", cub->player);
 		j = 0;
 		while (cub->t_map[i][j] == 32 && cub->t_map[i][j] != '\n')
 			j++;
@@ -106,7 +105,6 @@ int	check_player(t_cub *cub, t_check *check, int i)
 					cub->px = j;
 					check->player = 1;
 					cub->player = cub->t_map[i][j];
-					printf("%c\n", cub->player);
 				}
 				else
 					return (printf("error: many players\n"), 1);
