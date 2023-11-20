@@ -6,7 +6,7 @@
 /*   By: dcarrilh <dcarrilh@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/31 11:24:20 by dcarrilh          #+#    #+#             */
-/*   Updated: 2023/11/20 13:37:18 by dcarrilh         ###   ########.fr       */
+/*   Updated: 2023/11/20 14:06:05 by dcarrilh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -134,7 +134,7 @@ int	checks(t_cub *cub, t_check *check, char **argv)
 	while (cub->map[m])
 	{
 		cub->t_map[i] = ft_calloc(sizeof(char), cub->length + 1);
-		cub->t_map[i] = fillline(cub->t_map[i], cub->map[m++]);
+		cub->t_map[i] = fillline(cub->t_map[i], cub->map[m++], cub);
 		cub->t_map[i] = replace(cub->t_map[i], ' ', 'X');
 		cub->t_map[i][cub->length - 1] = '\n';    // length -> length -1
 		cub->t_map[i++][cub->length] = '\0';      // length +1 -> length
