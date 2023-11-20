@@ -6,7 +6,7 @@
 /*   By: dcarrilh <dcarrilh@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/30 12:37:53 by dcarrilh          #+#    #+#             */
-/*   Updated: 2023/11/17 11:02:59 by dcarrilh         ###   ########.fr       */
+/*   Updated: 2023/11/20 10:23:08 by dcarrilh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,6 +43,7 @@ typedef struct	cub
 		char **map;
 		char **t_map;
 		int	height;
+		int length;
 		int	t_height;
 		int	py;
 		int	px;
@@ -65,6 +66,10 @@ int check_identifier(t_cub *cub, t_check *check, int i, int j);
 int	check_texture(char *type, char *str);
 int redux(int *i, int *j, t_check *check);
 int	redcheck_map(t_check *check, t_cub *cub, int i, int j);
+char *replace(char *str, char a, char b);
+char	*fillline(char *dest, char *src);
+
+
 
 
 int	check_player(t_cub *cub, t_check *check, int n);

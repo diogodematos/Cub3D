@@ -6,7 +6,7 @@
 /*   By: dcarrilh <dcarrilh@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/31 11:24:20 by dcarrilh          #+#    #+#             */
-/*   Updated: 2023/11/16 15:54:19 by dcarrilh         ###   ########.fr       */
+/*   Updated: 2023/11/20 10:32:04 by dcarrilh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,6 +53,8 @@ void	get_height(t_cub *cub, char **argv)
 		if (!line)
 			break ;
 		cub->height++;
+		if (cub->length < (int)ft_strlen(line))
+			cub->length = (int)ft_strlen(line);
 		free(line);
 	}
 	close(fd);
@@ -65,7 +67,7 @@ int	check_map(t_cub *cub, t_check *check, int j)
 	while (cub->t_map[i])
 	{
 		j = 0;
-		while (cub->t_map[i][j] == 32 && cub->t_map[i][j] != '\n')
+		while (cub->t_map[i][j] == 32 || cub->t_map[i][j] == 'X')
 			j++;
 		if (cub->t_map[i][j] == '\n')
 		{
@@ -131,8 +133,16 @@ int	checks(t_cub *cub, t_check *check, char **argv)
 	cub->t_map = ft_calloc((cub->t_height + 1), sizeof(char *));
 	while (cub->map[m])
 	{
-		cub->t_map[i++] = strdup(cub->map[m++]);
+		cub->t_map[i] = malloc(sizeof(char) * cub->length + 1);
+		cub->t_map[i] = fillline(cub->t_map[i], cub->map[m++]);
+		cub->t_map[i] = replace(cub->t_map[i], ' ', 'X');
+		cub->t_map[i][cub->length] = '\n';
+		cub->t_map[i++][cub->length + 1] = '\0';
 	}
+	// while (cub->map[m])
+	// {
+	// 	cub->t_map[i++] = strdup(cub->map[m++]);
+	// }
 	if (check_player(cub, check, -1) || check_map(cub, check, 0))
 		return (myfree(cub->t_map), myfree(cub->map), 1);
 	return (0);
