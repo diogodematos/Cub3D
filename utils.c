@@ -6,7 +6,7 @@
 /*   By: dcarrilh <dcarrilh@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/02 12:19:37 by dcarrilh          #+#    #+#             */
-/*   Updated: 2023/11/20 10:59:27 by dcarrilh         ###   ########.fr       */
+/*   Updated: 2023/11/20 13:37:59 by dcarrilh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,7 +82,8 @@ int	redcheck_map(t_check *check, t_cub *cub, int i, int j)
 	else if (cub->t_map[i][j] == 49 && (cub->t_map[i][j + 1] == 'X'
 		|| cub->t_map[i][j + 1] == '\n') && check->wall == 1)
 		check->wall = 0;
-	else if ((cub->t_map[i][j] == 'X') && cub->t_map[i][j + 1] == 48)
+	else if (((cub->t_map[i][j] == 'X') && cub->t_map[i][j + 1] == 48)
+		|| ((cub->t_map[i][j] == 48) && cub->t_map[i][j + 1] == 'X'))     // abria quando tinha 0 seguido de nada
 		return (printf("error: map is open\n"), 1);
 	else if (((ft_strchr("WESN", cub->t_map[i][j]) != 0) 
 		|| cub->t_map[i][j] == 48) && i == 0)
@@ -108,4 +109,11 @@ void	myfree(char **str)
 	while (str[++i])
 		free(str[i]);
 	free(str);
+}
+void	freetext(t_cub *cub)
+{
+	free(cub->ntext);
+	free(cub->stext);
+	free(cub->etext);
+	free(cub->wtext);
 }

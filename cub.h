@@ -6,7 +6,7 @@
 /*   By: dcarrilh <dcarrilh@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/30 12:37:53 by dcarrilh          #+#    #+#             */
-/*   Updated: 2023/11/20 10:23:08 by dcarrilh         ###   ########.fr       */
+/*   Updated: 2023/11/20 12:33:55 by dcarrilh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,6 +68,8 @@ int redux(int *i, int *j, t_check *check);
 int	redcheck_map(t_check *check, t_cub *cub, int i, int j);
 char *replace(char *str, char a, char b);
 char	*fillline(char *dest, char *src);
+void	freetext(t_cub *cub);
+
 
 
 

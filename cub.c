@@ -6,7 +6,7 @@
 /*   By: dcarrilh <dcarrilh@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/30 11:31:22 by dcarrilh          #+#    #+#             */
-/*   Updated: 2023/11/20 11:00:03 by dcarrilh         ###   ########.fr       */
+/*   Updated: 2023/11/20 13:37:07 by dcarrilh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,10 +54,7 @@ int	main(int argc, char **argv)
 		printf("height: %d\n", cub.height);
 		printf("%s", cub.map[2]);
 	}
-	free(cub.ntext);
-	free(cub.stext);
-	free(cub.wtext);
-	free(cub.etext);
+	freetext(&cub); // free text
 	myfree(cub.map);
 	myfree(cub.t_map);
 	return (0);

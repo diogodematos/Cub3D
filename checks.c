@@ -6,7 +6,7 @@
 /*   By: dcarrilh <dcarrilh@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/31 11:24:20 by dcarrilh          #+#    #+#             */
-/*   Updated: 2023/11/20 10:32:04 by dcarrilh         ###   ########.fr       */
+/*   Updated: 2023/11/20 13:37:18 by dcarrilh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -133,17 +133,17 @@ int	checks(t_cub *cub, t_check *check, char **argv)
 	cub->t_map = ft_calloc((cub->t_height + 1), sizeof(char *));
 	while (cub->map[m])
 	{
-		cub->t_map[i] = malloc(sizeof(char) * cub->length + 1);
+		cub->t_map[i] = ft_calloc(sizeof(char), cub->length + 1);
 		cub->t_map[i] = fillline(cub->t_map[i], cub->map[m++]);
 		cub->t_map[i] = replace(cub->t_map[i], ' ', 'X');
-		cub->t_map[i][cub->length] = '\n';
-		cub->t_map[i++][cub->length + 1] = '\0';
+		cub->t_map[i][cub->length - 1] = '\n';    // length -> length -1
+		cub->t_map[i++][cub->length] = '\0';      // length +1 -> length
 	}
 	// while (cub->map[m])
 	// {
 	// 	cub->t_map[i++] = strdup(cub->map[m++]);
 	// }
 	if (check_player(cub, check, -1) || check_map(cub, check, 0))
-		return (myfree(cub->t_map), myfree(cub->map), 1);
+		return (myfree(cub->t_map), myfree(cub->map), freetext(cub), 1);     // free text
 	return (0);
 }
