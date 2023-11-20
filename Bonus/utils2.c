@@ -6,7 +6,7 @@
 /*   By: dcarrilh <dcarrilh@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/20 10:01:26 by dcarrilh          #+#    #+#             */
-/*   Updated: 2023/11/20 14:07:00 by dcarrilh         ###   ########.fr       */
+/*   Updated: 2023/11/20 14:17:18 by dcarrilh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,7 @@ char	*fillline(char *dest, char *src, t_cub *cub)
 	i = -1;
 	while (src[++i] && src[i] != '\n') // don't read new line
 		dest[i] = src[i];
-	while (i < cub->length - 1)  // copia ate ao final
+	while (i < cub->length)  // copia ate ao final
 		dest[i++] = 'X';
 	return (dest);
 }

@@ -1,11 +1,14 @@
 NAME = cub3d
+NAME_BONUS = cub3d_bonus
 
-SRC = cub.c checks.c utils.c check_type.c utils2.c\
+SRC = Mandatory/cub.c Mandatory/checks.c Mandatory/utils.c Mandatory/check_type.c Mandatory/utils2.c\
+
+
+BONUS = Bonus/cub.c Bonus/checks.c Bonus/utils.c Bonus/check_type.c Bonus/utils2.c\
 
 CC = cc -g
 RM = rm -rf
 CFLAGS = -Wall -Wextra -Werror
-AR = ar rcs
 
 OBJ = $(SRC:%.c=%.o)
 BONUS_OBJ = $(BONUS:%.c=%.o)
@@ -13,16 +16,20 @@ BONUS_OBJ = $(BONUS:%.c=%.o)
 all: $(NAME)
 
 $(NAME): $(OBJ)
-								$(MAKE) -C ./Libft
-								@$(CC) $(CFLAGS) $(OBJ) ./Libft/libft.a -o $(NAME)
+		$(MAKE) -C ./Libft
+		@$(CC) $(CFLAGS) $(OBJ) ./Libft/libft.a -o $(NAME)
 		
+bonus:	$(BONUS_OBJ)
+		$(MAKE) -C ./Libft
+		@$(CC) $(CFLAGS) $(BONUS_OBJ) ./Libft/libft.a -o $(NAME_BONUS)
+
 clean:
 		$(MAKE) clean -C ./Libft
-		@$(RM) $(OBJ)
+		@$(RM) $(OBJ) $(BONUS_OBJ)
 		
 fclean: clean
 		$(MAKE) fclean -C ./Libft
-		@$(RM) $(NAME) 
+		@$(RM) $(NAME) $(NAME_BONUS)
 		
 re: fclean all
 		$(MAKE) re -C ./Libft
