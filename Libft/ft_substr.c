@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_substr.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dcarrilh <dcarrilh@student.42.fr>          +#+  +:+       +#+        */
+/*   By: brolivei < brolivei@student.42porto.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/08 12:04:25 by dcarrilh          #+#    #+#             */
-/*   Updated: 2023/10/30 12:18:09 by dcarrilh         ###   ########.fr       */
+/*   Updated: 2023/11/22 12:12:20 by brolivei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,6 @@ char	*ft_substr(char const *s, unsigned int start, size_t len)
 	a = 0;
 	if (ft_strlen(s) >= start)
 	{
-		
 		while (s[start] && a != len)
 		{
 			dest[a] = s[start];

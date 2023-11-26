@@ -3,14 +3,15 @@
 /*                                                        :::      ::::::::   */
 /*   cub.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dcarrilh <dcarrilh@student.42.fr>          +#+  +:+       +#+        */
+/*   By: brolivei < brolivei@student.42porto.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/30 11:31:22 by dcarrilh          #+#    #+#             */
-/*   Updated: 2023/11/16 15:54:27 by dcarrilh         ###   ########.fr       */
+/*   Updated: 2023/11/24 14:38:47 by brolivei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub.h"
+#include "cub3d.h"
 
 int	ft_check_cub(char **argv)
 {
@@ -49,11 +50,8 @@ int	main(int argc, char **argv)
 	init_struct(&cub, &check);
 	if (checks(&cub, &check, argv))
 		return (0);
-	else 
-	{
-		printf("height: %d\n", cub.height);
-		printf("%s", cub.map[2]);
-	}
+	game(&cub);
+	freetext(&cub);
 	myfree(cub.map);
 	myfree(cub.t_map);
 	return (0);
